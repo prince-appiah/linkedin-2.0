@@ -8,13 +8,15 @@ export const baseUrl = dev
   : "https://linkedin-clone.vercel.app";
 
 export async function middleware(req) {
-  if (req.nextUrl.pathname === "/home") {
+  console.log("🚀 ~ req.nextUrl.pathname", req.nextUrl.pathname);
+  if (req.nextUrl.pathname === "/") {
     const session = await getToken({
       req,
       secret: process.env.JWT_SECRET,
       secureCookie: process.env.NODE_ENV === "production",
     });
 
-    if (!session) return NextResponse.redirect(`${baseUrl}/`);
+    if (!session) return NextResponse.redirect("/home");
+    // if (!session) return NextResponse.redirect(`${baseUrl}/`);
   }
 }
