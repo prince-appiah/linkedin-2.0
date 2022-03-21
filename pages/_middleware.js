@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt";
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const dev = process.env.NODE_ENV === "development";
 
@@ -8,15 +8,18 @@ export const baseUrl = dev
   : "https://linkedin-clone.vercel.app";
 
 export async function middleware(req) {
-  console.log("🚀 ~ req.nextUrl.pathname", req.nextUrl.pathname);
   if (req.nextUrl.pathname === "/") {
     const session = await getToken({
       req,
       secret: process.env.JWT_SECRET,
       secureCookie: process.env.NODE_ENV === "production",
     });
+    console.log("🚀 ~ session", session);
 
-    if (!session) return NextResponse.redirect("/home");
-    // if (!session) return NextResponse.redirect(`${baseUrl}/`);
+    const url = req.nextUrl.clone();
+    url.pathname = "/home";
+
+    if (!session) return NextResponse.redirect(url);
+    // if (!session) return NextResponse.redirect(`${baseUrl}/home`);
   }
 }

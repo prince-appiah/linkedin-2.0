@@ -5,11 +5,12 @@ import {
   Group,
   OndemandVideoSharp,
 } from "@mui/icons-material";
+import { getProviders, signIn } from "next-auth/react";
 import Image from "next/image";
 import logo from "../assets/images/linkedin.png";
 import HeaderLink from "../components/HeaderLink";
 import PageMeta from "../components/PageMeta";
-import { getProviders, signIn } from "next-auth/react";
+import bgHero from "../assets/images/bg-hero-1.svg";
 
 const Home = ({ providers }) => {
   return (
@@ -30,17 +31,17 @@ const Home = ({ providers }) => {
         </div>
         <div className="flex items-center divide-gray-300 sm:divide-x">
           <div className="hidden pr-4 space-x-8 sm:flex">
-            <HeaderLink Icon={Explore} text="Discover" />
-            <HeaderLink Icon={Group} text="People" />
-            <HeaderLink Icon={OndemandVideoSharp} text="Learning" />
-            <HeaderLink Icon={BusinessCenter} text="Jobs" />
+            <HeaderLink icon={Explore} text="Discover" />
+            <HeaderLink icon={Group} text="People" />
+            <HeaderLink icon={OndemandVideoSharp} text="Learning" />
+            <HeaderLink icon={BusinessCenter} text="Jobs" />
           </div>
 
           {Object.values(providers).map((provider) => (
             <div key={provider.name}>
               <div className="pl-4">
                 <button
-                  onClick={() => signIn(provider.id, { callbackUrl: "" })}
+                  onClick={() => signIn(provider.id, { callbackUrl: "/" })}
                   className="font-semibold text-blue-700 border border-blue-700  rounded-full px-5 py-1.5 transition-all hover:border-2"
                 >
                   Sign In
@@ -74,7 +75,7 @@ const Home = ({ providers }) => {
         </div>
 
         <div className="relative xl:absolute w-80 h-80 xl:w-[650px] top-14 right-5 xl:h-[650px]">
-          <Image src="https://rb.gy/vkzpzt" alt="bg" layout="fill" priority />
+          <Image src={bgHero} alt="bg" layout="fill" priority />
         </div>
       </main>
     </div>
