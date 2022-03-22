@@ -21,7 +21,7 @@ const Header = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme, setTheme, theme } = useTheme();
 
-  // useEffect(() => setIsMounted(true), []);
+  useEffect(() => setIsMounted(true), []);
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-[#1D2226] flex items-center justify-around py-1.5 px-3 focus-within:shadow-md">
@@ -30,17 +30,17 @@ const Header = () => {
         {isMounted &&
           (resolvedTheme === "dark" ? (
             <Image
-              src={linkedinLight}
-              alt="linkedin-light"
-              width={55}
-              height={55}
-            />
-          ) : (
-            <Image
               src={linkedinDark}
               alt="linkedin-dark"
               width={45}
               height={45}
+            />
+          ) : (
+            <Image
+              src={linkedinLight}
+              alt="linkedin-light"
+              width={55}
+              height={55}
             />
           ))}
 
@@ -69,7 +69,9 @@ const Header = () => {
             className={`bg-gray-600 flex items-center px-0.5 rounded-full h-6 w-12 cursor-pointer flex-shrink-0 relative ${
               resolvedTheme === "dark" ? "justify-end" : "justify-start"
             }`}
-            onClick={setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
           >
             <span className="absolute left-0">🌜</span>
 
