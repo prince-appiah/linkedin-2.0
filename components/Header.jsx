@@ -16,10 +16,12 @@ import { motion } from "framer-motion";
 import linkedinLight from "../assets/images/linkedin-light.svg";
 import linkedinDark from "../assets/images/linkedin-dark.png";
 import HeaderLink from "../components/HeaderLink";
+import { useSession } from "next-auth/react";
 ``;
 const Header = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme, setTheme, theme } = useTheme();
+  const { data: session } = useSession();
 
   useEffect(() => setIsMounted(true), []);
 
@@ -60,7 +62,13 @@ const Header = () => {
         <HeaderLink icon={BusinessCenter} text="Jobs" feed hidden />
         <HeaderLink icon={Chat} text="Messaging" feed hidden />
         {/* <HeaderLink icon={Notification} text="Notifications" feed /> */}
-        {/* <HeaderLink icon={Avatar} text="Me" feed avatar={true} hidden /> */}
+        {/* <HeaderLink
+          icon={Avatar}
+          text="Me"
+          feed
+          avatar={session?.user?.image}
+          hidden
+        /> */}
         <HeaderLink icon={AppsOutlined} text="Work" feed hidden />
 
         {/* Theme toggle */}

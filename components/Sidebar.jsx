@@ -1,10 +1,12 @@
 import { AddRounded, BookmarkOutlined } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import sidebarBg from "../assets/images/sidebar-bg.webp";
 
 const Sidebar = () => {
+  const { data: session } = useSession();
+
   return (
     <aside className="max-w-lg space-y-2 min-w-max">
       {/* Top */}
@@ -15,8 +17,7 @@ const Sidebar = () => {
         </div>
         <Avatar
           //   onClick={signOut}
-          //   src={session?.user?.image}
-          src=""
+          src={session?.user?.image}
           className="!h-14 !w-14 !border-2 !absolute !top-4 !cursor-pointer"
         />
         <div className="mt-5 py-4 space-y-0.5 ">
@@ -24,7 +25,7 @@ const Sidebar = () => {
             Prince Oris
           </h4>
           <p className="text-sm text-black/60 dark:text-white/75">
-            prince@oris.com
+            {session?.user?.email}
           </p>
         </div>
         <div className="hidden text-sm text-left md:inline dark:text-white/75">
