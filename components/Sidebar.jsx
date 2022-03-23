@@ -22,7 +22,7 @@ const Sidebar = () => {
         />
         <div className="mt-5 py-4 space-y-0.5 ">
           <h4 className="cursor-pointer hover:underline decoration-purple-700 underline-offset-1">
-            Prince Oris
+            {session?.user?.name}
           </h4>
           <p className="text-sm text-black/60 dark:text-white/75">
             {session?.user?.email}
@@ -57,7 +57,7 @@ const Sidebar = () => {
         </div>
       </div>
       {/* Bottom */}
-      <div className="hidden md:flex bg-white dark:bg-[#1d2226] rounded-lg overflow-hidden flex-col space-y-2 pt-2.5 sticky border border-gray-300    top-20  text-black/70 dark:text-white/75 ">
+      <div className="hidden md:flex bg-white dark:bg-[#1d2226] rounded-lg overflow-hidden flex-col space-y-2 pt-2.5 sticky border border-gray-300 dark:border-none   top-20  text-black/70 dark:text-white/75 ">
         <p className="sidebarLink">Groups</p>
         <div className="flex items-center justify-between">
           <p className="sidebarLink">Events</p>

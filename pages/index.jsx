@@ -5,15 +5,23 @@ import PageMeta from "../components/PageMeta";
 import Header from "../components/Header";
 import logo from "../assets/images/linkedin.png";
 import Sidebar from "../components/Sidebar";
+import Widgets from "../components/Widgets";
 import { useRouter } from "next/router";
 import Feed from "../components/Feed";
+import { AnimatePresence } from "framer-motion";
+import Modal from "../components/Modal";
+import { useRecoilState } from "recoil";
+import { modalState, modalTypeState } from "../atoms/modalAtom";
+import { connectToDatabase } from "../utils/mongodb";
 
-export default function Home() {
+export default function Home({ posts, news }) {
   const router = useRouter();
   const { status } = useSession({
     required: true,
     onUnauthenticated: () => router.push("/home"),
   });
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [modalType, setModalType] = useRecoilState(modalTypeState);
 
   return (
     <div className="bg-gray-[#f3f2ef] dark:bg-black h-screen overflow-y-scroll md:space-y-6 dark:text-white">
@@ -24,10 +32,16 @@ export default function Home() {
           {/* Sidebar */}
           <Sidebar />
           {/* Feed */}
-          <Feed />
+          <Feed posts={posts} />
         </div>
         {/* Widgets */}
-        <div className=""></div>
+        <Widgets news={news} />
+
+        <AnimatePresence>
+          {modalOpen && (
+            <Modal handleClose={() => setModalOpen(false)} type={modalType} />
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
@@ -39,5 +53,32 @@ export async function getServerSideProps(ctx) {
     return { redirect: { permanent: false, destination: "/home" } };
   }
 
-  return { props: { session } };
+  const { db } = await connectToDatabase();
+  const posts = await db
+    .collection("posts")
+    .find()
+    .sort({ timestamp: -1 })
+    .toArray();
+
+  // google news api
+  const results = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`
+  )
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+
+  return {
+    props: {
+      session,
+      news: results.articles,
+      posts: posts.map((i) => ({
+        _id: i._id.toString(),
+        input: i.input,
+        photoUrl: i.photoUrl,
+        userImg: i.userImg,
+        email: i.email,
+        createdAt: i.createdAt,
+      })),
+    },
+  };
 }

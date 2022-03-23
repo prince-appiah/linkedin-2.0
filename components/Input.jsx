@@ -7,9 +7,14 @@ import {
 } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
+import { useRecoilState } from "recoil";
+
+import { modalState, modalTypeState } from "../atoms/modalAtom";
 
 const Input = () => {
   const { data: session } = useSession();
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [modalType, setModalType] = useRecoilState(modalTypeState);
 
   return (
     <div className="bg-white  rounded=lg p-3 space-y-3 border border-gray-300 dark:border-none  dark:bg-[#1d2226]">
@@ -24,7 +29,10 @@ const Input = () => {
           className="rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left"
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.95 }}
-          // onClick={() => { }}
+          onClick={() => {
+            setModalOpen(true);
+            setModalType("dropIn");
+          }}
         >
           Add a post
         </motion.button>
