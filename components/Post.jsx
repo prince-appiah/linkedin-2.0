@@ -1,18 +1,17 @@
-import { Avatar, IconButton } from "@mui/material";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
+import ReplyRoundedIcon from "@mui/icons-material/ReplyRounded";
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
 import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
-import { useRecoilState } from "recoil";
-import { handlePostState, getPostState } from "../atoms/postAtom";
-import { useState } from "react";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ReplyRoundedIcon from "@mui/icons-material/ReplyRounded";
-import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import { modalState, modalTypeState } from "../atoms/modalAtom";
-import TimeAgo from "timeago-react";
+import { Avatar, IconButton } from "@mui/material";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import TimeAgo from "timeago-react";
+import { modalState, modalTypeState } from "../atoms/modalAtom";
+import { getPostState, handlePostState } from "../atoms/postAtom";
 
 function Post({ post, modalPost }) {
   const { data: session } = useSession();

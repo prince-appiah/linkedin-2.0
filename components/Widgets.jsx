@@ -39,10 +39,10 @@ const Widgets = ({ news }) => {
         <div className="relative w-full h-full">
           <img
             src={jobs}
-            // layout="fill"
-            // objectFit="contain"
+            layout="fill"
+            objectFit="contain"
             alt=""
-            // priority="true"
+            priority="true"
           />
         </div>
       </div>
